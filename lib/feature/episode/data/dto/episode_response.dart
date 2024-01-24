@@ -1,30 +1,18 @@
-import 'dart:convert';
-
 class EpisodeResponse {
   Info info;
-  List<Result> results;
+  List<EpisodeResult> results;
 
   EpisodeResponse({
     required this.info,
     required this.results,
   });
 
-  factory EpisodeResponse.fromRawJson(String str) =>
-      EpisodeResponse.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory EpisodeResponse.fromJson(Map<String, dynamic> json) =>
       EpisodeResponse(
         info: Info.fromJson(json["info"]),
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        results: List<EpisodeResult>.from(
+            json["results"].map((x) => EpisodeResult.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "info": info.toJson(),
-        "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
 }
 
 class Info {
@@ -40,26 +28,15 @@ class Info {
     required this.prev,
   });
 
-  factory Info.fromRawJson(String str) => Info.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory Info.fromJson(Map<String, dynamic> json) => Info(
         count: json["count"],
         pages: json["pages"],
         next: json["next"],
         prev: json["prev"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "count": count,
-        "pages": pages,
-        "next": next,
-        "prev": prev,
-      };
 }
 
-class Result {
+class EpisodeResult {
   int id;
   String name;
   String airDate;
@@ -68,7 +45,7 @@ class Result {
   String url;
   DateTime created;
 
-  Result({
+  EpisodeResult({
     required this.id,
     required this.name,
     required this.airDate,
@@ -78,11 +55,7 @@ class Result {
     required this.created,
   });
 
-  factory Result.fromRawJson(String str) => Result.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory EpisodeResult.fromJson(Map<String, dynamic> json) => EpisodeResult(
         id: json["id"],
         name: json["name"],
         airDate: json["air_date"],
@@ -91,14 +64,4 @@ class Result {
         url: json["url"],
         created: DateTime.parse(json["created"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "air_date": airDate,
-        "episode": episode,
-        "characters": List<dynamic>.from(characters.map((x) => x)),
-        "url": url,
-        "created": created.toIso8601String(),
-      };
 }

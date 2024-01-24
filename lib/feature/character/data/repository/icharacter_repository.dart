@@ -3,4 +3,5 @@ import 'package:rick_morty_api/feature/character/data/dto/character_response.dar
 abstract class ICharacterRepository {
   Future<CharacterResponse> getChacterResponse();
   Future<CharacterResult> getCharacterWithId(int id);
+  Future<CharacterResult> getCharacterWithUrl(String url);
 }

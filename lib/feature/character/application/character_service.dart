@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_morty_api/common/exception/failure.dart';
 import 'package:rick_morty_api/feature/character/application/icharacter_service.dart';
 import 'package:rick_morty_api/feature/character/data/dto/character_response.dart';
 import 'package:rick_morty_api/feature/character/data/repository/character_repository.dart';
@@ -18,22 +17,20 @@ class CharacterService implements ICharacterService {
 
   @override
   Future<List<Character>> getCharacterList() async {
-    try {
-      var response = await _characterRepository.getChacterResponse();
-      return responseToCharacterList(response);
-    } catch (e) {
-      throw Failure(message: e.toString());
-    }
+    var response = await _characterRepository.getChacterResponse();
+    return responseToCharacterList(response);
   }
 
   @override
   Future<Character> getCharacterWithId(int id) async {
-    try {
-      var response = await _characterRepository.getCharacterWithId(id);
-      return characterResultToCharacter(response);
-    } catch (e) {
-      throw Failure(message: e.toString());
-    }
+    var response = await _characterRepository.getCharacterWithId(id);
+    return characterResultToCharacter(response);
+  }
+
+  @override
+  Future<Character> getCharacterWithUrl(String url) async {
+    var response = await _characterRepository.getCharacterWithUrl(url);
+    return characterResultToCharacter(response);
   }
 
   characterResultToCharacter(CharacterResult result) {

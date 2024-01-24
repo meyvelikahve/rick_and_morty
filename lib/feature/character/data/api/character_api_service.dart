@@ -9,10 +9,11 @@ final characterApiServiceProvider = Provider<ICharacterApiService>((ref) {
 });
 
 class CharacterApiService with UrlMixin implements ICharacterApiService {
+  String basePath = '/api/character';
   @override
   Future<http.Response> getCharacterResponse() async {
     try {
-      final url = getUri('/api/character');
+      final url = getUriWithPath(basePath);
 
       return await http.get(url);
     } catch (e) {
@@ -23,9 +24,18 @@ class CharacterApiService with UrlMixin implements ICharacterApiService {
   @override
   Future<http.Response> getCharacterWithId(int id) async {
     try {
-      final url = getUri('/api/character/$id');
+      final url = getUriWithPath('$basePath/$id');
 
       return await http.get(url);
+    } catch (e) {
+      throw Failure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<http.Response> getCharacterWithUrl(String url) async {
+    try {
+      return await http.get(getUri(url));
     } catch (e) {
       throw Failure(message: e.toString());
     }

@@ -15,6 +15,8 @@ class CharacterDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ICharacterService characterService = ref.watch(characterServiceProvider);
 
+    print(id);
+
     return GeneralFutureBuilder(
       future: characterService.getCharacterWithId(
         int.parse(id),

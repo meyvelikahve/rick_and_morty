@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rick_morty_api/feature/character/presentation/ui/character_detail_screen.dart';
 import 'package:rick_morty_api/feature/character/presentation/ui/character_screen.dart';
@@ -26,33 +25,15 @@ class AppNavigation {
   static final GlobalKey<NavigatorState> _rootNavigatorKey =
       GlobalKey(debugLabel: 'root');
 
-  final GlobalKey<NavigatorState> _shellNavigatorKey =
-      GlobalKey(debugLabel: 'shell');
-
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePathEnum.episode.path,
+    initialLocation: RoutePathEnum.character.path,
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return DashboardScreen(child: navigationShell);
         },
         branches: <StatefulShellBranch>[
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: RoutePathEnum.episode.path,
-                name: RoutePathEnum.episode.name,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: EpisodeScreen(
-                      key: state.pageKey,
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
@@ -75,6 +56,21 @@ class AppNavigation {
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
                     child: CharacterScreen(
+                      key: state.pageKey,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: RoutePathEnum.episode.path,
+                name: RoutePathEnum.episode.name,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: EpisodeScreen(
                       key: state.pageKey,
                     ),
                   );

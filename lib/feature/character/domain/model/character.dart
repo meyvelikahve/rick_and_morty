@@ -7,8 +7,8 @@ class Character {
   String species;
   String type;
   String gender;
-  Location origin;
-  Location location;
+  CharacterLocation origin;
+  CharacterLocation location;
   String image;
   List<String> episode;
   String url;

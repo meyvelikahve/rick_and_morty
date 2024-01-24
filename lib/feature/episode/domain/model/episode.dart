@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Episode {
   int id;
   String name;
@@ -19,10 +17,6 @@ class Episode {
     required this.created,
   });
 
-  factory Episode.fromRawJson(String str) => Episode.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory Episode.fromJson(Map<String, dynamic> json) => Episode(
         id: json["id"],
         name: json["name"],
@@ -32,14 +26,4 @@ class Episode {
         url: json["url"],
         created: DateTime.parse(json["created"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "air_date": airDate,
-        "episode": episode,
-        "characters": List<dynamic>.from(characters.map((x) => x)),
-        "url": url,
-        "created": created.toIso8601String(),
-      };
 }

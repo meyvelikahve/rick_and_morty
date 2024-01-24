@@ -50,8 +50,8 @@ class CharacterResult {
   String species;
   String type;
   String gender;
-  Location origin;
-  Location location;
+  CharacterLocation origin;
+  CharacterLocation location;
   String image;
   List<String> episode;
   String url;
@@ -83,8 +83,8 @@ class CharacterResult {
         species: json["species"],
         type: json["type"],
         gender: json["gender"],
-        origin: Location.fromJson(json["origin"]),
-        location: Location.fromJson(json["location"]),
+        origin: CharacterLocation.fromJson(json["origin"]),
+        location: CharacterLocation.fromJson(json["location"]),
         image: json["image"],
         episode: List<String>.from(json["episode"].map((x) => x)),
         url: json["url"],
@@ -92,19 +92,20 @@ class CharacterResult {
       );
 }
 
-class Location {
+class CharacterLocation {
   String name;
   String url;
 
-  Location({
+  CharacterLocation({
     required this.name,
     required this.url,
   });
 
-  factory Location.fromRawJson(String str) =>
-      Location.fromJson(json.decode(str));
+  factory CharacterLocation.fromRawJson(String str) =>
+      CharacterLocation.fromJson(json.decode(str));
 
-  factory Location.fromJson(Map<String, dynamic> json) => Location(
+  factory CharacterLocation.fromJson(Map<String, dynamic> json) =>
+      CharacterLocation(
         name: json["name"],
         url: json["url"],
       );

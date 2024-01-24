@@ -1,22 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_morty_api/feature/episode/application/episode_service.dart';
+import 'package:rick_morty_api/feature/episode/data/dto/episode_response.dart';
 import 'package:rick_morty_api/feature/episode/domain/model/episode.dart';
 import 'package:rick_morty_api/feature/episode/presentation/state/page_index_provider.dart';
 import 'package:rick_morty_api/utils/api_future_builder.dart';
 
-class EpisodeScreen extends ConsumerWidget {
+class EpisodeScreen extends ConsumerStatefulWidget {
   const EpisodeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<EpisodeScreen> createState() => _EpisodeScreenState();
+}
+
+class _EpisodeScreenState extends ConsumerState<EpisodeScreen> {
+  String? url;
+  @override
+  Widget build(BuildContext context) {
     EpisodeService episodeService = ref.watch(episodeServiceProvider);
-    int pageIndex = ref.watch(pageIndexProvider);
     return Scaffold(
       body: GeneralFutureBuilder(
-        future: episodeService.getEpisodeList(pageIndex),
+        future: episodeService.getEpisodeResponse(url: url),
         builder: (context, data) {
-          return bodyColumn(ref, data);
+          EpisodeResponse episodeResponse = data;
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: episodeResponse.results.length,
+                  itemBuilder: (context, index) {
+                    var episode = episodeResponse.results[index];
+                    return Card(
+                      child: ListTile(
+                        trailing: Text(episode.episode),
+                        title: Text(episode.name),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  data.info.prev != null
+                      ? IconButton(
+                          onPressed: () {
+                            url = data.info.prev;
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.chevron_left),
+                        )
+                      : const SizedBox(),
+                  data.info.next != null
+                      ? IconButton(
+                          onPressed: () {
+                            url = data.info.next;
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.chevron_right),
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+            ],
+          );
         },
       ),
     );

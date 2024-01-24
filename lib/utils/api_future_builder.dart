@@ -14,7 +14,13 @@ class GeneralFutureBuilder<T> extends StatelessWidget {
       future: future,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return builder(context, snapshot.data!);
+          if (snapshot.data != null) {
+            return builder(context, snapshot.data!);
+          } else {
+            return const Center(
+              child: Text("Data has not found"),
+            );
+          }
         } else {
           return Center(
             child: CircularProgressIndicator.adaptive(),

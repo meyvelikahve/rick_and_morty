@@ -23,35 +23,40 @@ class CharacterRepository implements ICharacterRepository {
 
   @override
   Future<CharacterResponse> getChacterResponse() async {
-    try {
-      var response = await _characterService.getCharacterResponse();
+    var response = await _characterService.getCharacterResponse();
 
-      if (response.statusCode != HttpStatus.ok) {
-        throw Failure(message: response.httpResponseError());
-      }
-
-      final json = jsonDecode(response.body);
-
-      return CharacterResponse.fromJson(json);
-    } catch (e) {
-      throw Failure(message: e.toString());
+    if (response.statusCode != HttpStatus.ok) {
+      throw Failure(message: response.httpResponseError());
     }
+
+    final json = jsonDecode(response.body);
+
+    return CharacterResponse.fromJson(json);
   }
 
   @override
   Future<CharacterResult> getCharacterWithId(int id) async {
-    try {
-      var response = await _characterService.getCharacterWithId(id);
+    var response = await _characterService.getCharacterWithId(id);
 
-      if (response.statusCode != HttpStatus.ok) {
-        throw Failure(message: response.httpResponseError());
-      }
-
-      final json = jsonDecode(response.body);
-
-      return CharacterResult.fromJson(json);
-    } catch (e) {
-      throw Failure(message: e.toString());
+    if (response.statusCode != HttpStatus.ok) {
+      throw Failure(message: response.httpResponseError());
     }
+
+    final json = jsonDecode(response.body);
+
+    return CharacterResult.fromJson(json);
+  }
+
+  @override
+  Future<CharacterResult> getCharacterWithUrl(String url) async {
+    var response = await _characterService.getCharacterWithUrl(url);
+
+    if (response.statusCode != HttpStatus.ok) {
+      throw Failure(message: response.httpResponseError());
+    }
+
+    final json = jsonDecode(response.body);
+
+    return CharacterResult.fromJson(json);
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rick_morty_api/core/navigation/app_navigation.dart';
 import 'package:rick_morty_api/feature/character/application/character_service.dart';
 import 'package:rick_morty_api/feature/character/application/icharacter_service.dart';
 import 'package:rick_morty_api/feature/character/domain/model/character.dart';
-import 'package:rick_morty_api/feature/character/presentation/ui/character_detail_screen.dart';
 
 class CharacterScreen extends ConsumerWidget {
   const CharacterScreen({super.key});
@@ -38,16 +38,28 @@ class CharacterScreen extends ConsumerWidget {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
+          child: GridView.builder(
             itemCount: characterList.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, mainAxisExtent: 100),
             itemBuilder: (context, index) {
               Character character = characterList[index];
+
               return InkWell(
                 onTap: () {
-                  GoRouter.of(context).go('/characterDetail', extra: {'id': 1});
+                  click(context, characterList, index);
                 },
-                child: ListTile(
-                  title: Text(character.name),
+                child: Card(
+                  child: Row(
+                    children: [
+                      Expanded(child: Image.network(character.image)),
+                      Expanded(
+                        child: Center(
+                          child: Text(character.species),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               );
             },
@@ -60,6 +72,13 @@ class CharacterScreen extends ConsumerWidget {
           icon: const Icon(Icons.chevron_right),
         ),
       ],
+    );
+  }
+
+  void click(BuildContext context, List<Character> characterList, int index) {
+    context.pushNamed(
+      RoutePathEnum.characterDetail.path,
+      pathParameters: {'id': characterList[index].id.toString()},
     );
   }
 }

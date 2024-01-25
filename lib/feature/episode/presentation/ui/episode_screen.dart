@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_morty_api/feature/episode/application/episode_service.dart';
 import 'package:rick_morty_api/feature/episode/data/dto/episode_response.dart';
-import 'package:rick_morty_api/feature/episode/domain/model/episode.dart';
+import 'package:rick_morty_api/feature/episode/domain/entities/episode.dart';
 import 'package:rick_morty_api/feature/episode/presentation/state/page_index_provider.dart';
 import 'package:rick_morty_api/utils/api_future_builder.dart';
 

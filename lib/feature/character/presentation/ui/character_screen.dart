@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rick_morty_api/core/navigation/app_navigation.dart';
-import 'package:rick_morty_api/feature/character/application/character_service.dart';
-import 'package:rick_morty_api/feature/character/application/icharacter_service.dart';
-import 'package:rick_morty_api/feature/character/domain/model/character.dart';
+import 'package:rick_morty_api/feature/character/data/models/character_model.dart';
+import 'package:rick_morty_api/feature/character/domain/use_cases/get_characters.dart';
 
 class CharacterScreen extends ConsumerWidget {
   const CharacterScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ICharacterService characterService = ref.watch(characterServiceProvider);
+    GetCharacters getCharacters = ref.watch(getCharacterProvider);
     return Scaffold(
       body: FutureBuilder(
-        future: characterService.getCharacterList(),
+        future: getCharacters.call(params: GetCharactersParams(1, {})),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data != null) {
-              return bodyColumn(ref, snapshot.data!);
+            if (snapshot.data?.data != null) {
+              return bodyColumn(ref, snapshot.data!.data!);
             } else {
               return const Center(
                 child: Text("Episodes not found."),
@@ -34,7 +33,7 @@ class CharacterScreen extends ConsumerWidget {
     );
   }
 
-  Widget bodyColumn(WidgetRef ref, List<Character> characterList) {
+  Widget bodyColumn(WidgetRef ref, List<CharacterModel> characterList) {
     return Column(
       children: [
         Expanded(
@@ -43,7 +42,7 @@ class CharacterScreen extends ConsumerWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1, mainAxisExtent: 100),
             itemBuilder: (context, index) {
-              Character character = characterList[index];
+              CharacterModel character = characterList[index];
 
               return InkWell(
                 onTap: () {
@@ -52,10 +51,10 @@ class CharacterScreen extends ConsumerWidget {
                 child: Card(
                   child: Row(
                     children: [
-                      Expanded(child: Image.network(character.image)),
+                      Expanded(child: Image.network(character.image!)),
                       Expanded(
                         child: Center(
-                          child: Text(character.species),
+                          child: Text(character.species!),
                         ),
                       )
                     ],
@@ -75,7 +74,8 @@ class CharacterScreen extends ConsumerWidget {
     );
   }
 
-  void click(BuildContext context, List<Character> characterList, int index) {
+  void click(
+      BuildContext context, List<CharacterModel> characterList, int index) {
     context.pushNamed(
       RoutePathEnum.characterDetail.path,
       pathParameters: {'id': characterList[index].id.toString()},

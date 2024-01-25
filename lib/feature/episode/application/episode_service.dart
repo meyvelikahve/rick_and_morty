@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_morty_api/feature/episode/application/iepisode_service.dart';
 import 'package:rick_morty_api/feature/episode/data/dto/episode_response.dart';
-import 'package:rick_morty_api/feature/episode/domain/model/episode.dart';
+import 'package:rick_morty_api/feature/episode/domain/entities/episode.dart';
 import 'package:rick_morty_api/feature/episode/data/repository/episode_repository.dart';
 import 'package:rick_morty_api/feature/episode/data/repository/iepisode_repository.dart';
 

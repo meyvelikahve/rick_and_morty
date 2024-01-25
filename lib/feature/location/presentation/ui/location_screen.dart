@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_morty_api/feature/location/application/location_service.dart';
-import 'package:rick_morty_api/feature/location/domain/model/location_model.dart';
+import 'package:rick_morty_api/feature/location/domain/entities/location_model.dart';
 import 'package:rick_morty_api/utils/api_future_builder.dart';
 
 class LocationScreen extends ConsumerWidget {

@@ -3,7 +3,7 @@ import 'package:rick_morty_api/feature/location/application/ilocation_service.da
 import 'package:rick_morty_api/feature/location/data/dto/location_response.dart';
 import 'package:rick_morty_api/feature/location/data/repository/ilocation_respository.dart';
 import 'package:rick_morty_api/feature/location/data/repository/location_repository.dart';
-import 'package:rick_morty_api/feature/location/domain/model/location_model.dart';
+import 'package:rick_morty_api/feature/location/domain/entities/location_model.dart';
 
 final locationServiceProvider = Provider<ILocationService>((ref) {
   var locationRepository = ref.watch(locationRepositoryProvider);

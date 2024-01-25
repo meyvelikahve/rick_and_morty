@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rick_morty_api/feature/character/presentation/ui/character_detail_screen.dart';
 import 'package:rick_morty_api/feature/character/presentation/ui/character_screen.dart';
 import 'package:rick_morty_api/feature/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:rick_morty_api/feature/episode/presentation/ui/episode_screen.dart';
 import 'package:rick_morty_api/feature/location/presentation/ui/location_screen.dart';
 import 'package:rick_morty_api/feature/setting/presentation/setting_screen.dart';
+
+import '../../feature/character/presentation/ui/character_detail_screen.dart';
 
 enum RoutePathEnum {
   episode(path: '/episode'),

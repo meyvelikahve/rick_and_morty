@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rick_morty_api/feature/character/application/character_service.dart';
-import 'package:rick_morty_api/feature/character/application/icharacter_service.dart';
+import 'package:rick_morty_api/feature/character/data/models/character_model.dart';
+import 'package:rick_morty_api/feature/character/domain/use_cases/get_charactecter_detail.dart';
 import 'package:rick_morty_api/utils/api_future_builder.dart';
 
-import '../../domain/model/character.dart';
+import '../../domain/entities/character_entity.dart';
 
 class CharacterDetailScreen extends ConsumerWidget {
   final String id;
@@ -13,21 +13,28 @@ class CharacterDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ICharacterService characterService = ref.watch(characterServiceProvider);
+    GetCharacterDetail characterModel = ref.watch(getCharacterDetailProvider);
 
     print(id);
 
     return GeneralFutureBuilder(
-      future: characterService.getCharacterWithId(
-        int.parse(id),
-      ),
+      // future: characterService.getCharacterWithId(
+      //   int.parse(id),
+      // ),
+      future: characterModel.call(params: int.parse(id)),
       builder: (context, data) {
-        return myBody(context, data);
+        if (data.data != null) {
+          return myBody(context, data.data!);
+        } else {
+          return Center(
+            child: Text(data.exception?.message ?? 'Something went wrong'),
+          );
+        }
       },
     );
   }
 
-  Widget myBody(BuildContext context, Character character) {
+  Widget myBody(BuildContext context, CharacterModel character) {
     return Column(
       children: [
         Row(
@@ -40,33 +47,33 @@ class CharacterDetailScreen extends ConsumerWidget {
             ),
           ],
         ),
-        Image.network(character.image),
+        Image.network(character.image ?? ''),
         Text(
-          character.name,
+          character.name ?? '',
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         Text(
-          character.gender,
+          character.gender ?? '',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
-          character.species,
+          character.species ?? '',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
-          character.status,
+          character.status ?? '',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
-          character.location.name,
+          character.location?.name ?? '',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
-          character.type,
+          character.type ?? '',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         Text(
-          character.origin.name,
+          character.origin?.name ?? '',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ],

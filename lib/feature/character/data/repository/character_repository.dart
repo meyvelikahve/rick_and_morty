@@ -3,11 +3,12 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_morty_api/common/exception/failure.dart';
-import 'package:rick_morty_api/common/extention/http_response_error.dart';
-import 'package:rick_morty_api/feature/character/data/api/character_api_service.dart';
-import 'package:rick_morty_api/feature/character/data/api/icharacter_api_service.dart';
-import 'package:rick_morty_api/feature/character/data/dto/character_response.dart';
-import 'package:rick_morty_api/feature/character/data/repository/icharacter_repository.dart';
+import 'package:rick_morty_api/core/resources/data_state.dart';
+import 'package:rick_morty_api/feature/character/data/data_sources/api/character_api_service.dart';
+import 'package:rick_morty_api/feature/character/data/data_sources/api/icharacter_api_service.dart';
+import 'package:rick_morty_api/feature/character/data/models/character_model.dart';
+import 'package:rick_morty_api/feature/character/data/models/character_response.dart';
+import 'package:rick_morty_api/feature/character/domain/repository/icharacter_repository.dart';
 
 final characterRepositorProvider = Provider<ICharacterRepository>((ref) {
   ICharacterApiService characterApiService =
@@ -22,41 +23,37 @@ class CharacterRepository implements ICharacterRepository {
   );
 
   @override
-  Future<CharacterResponse> getChacterResponse() async {
-    var response = await _characterService.getCharacterResponse();
+  Future<DataState<CharacterResponse>> getCharacters() async {
+    try {
+      var response = await _characterService.getCharacters();
 
-    if (response.statusCode != HttpStatus.ok) {
-      throw Failure(message: response.httpResponseError());
+      if (response.statusCode == HttpStatus.ok) {
+        var decodedBody = jsonDecode(response.body);
+        CharacterResponse characterResponse =
+            CharacterResponse.fromJson(decodedBody);
+        return DataSuccess(characterResponse);
+      } else {
+        return DataFailed(Failure(message: 'Http status is not ok.'));
+      }
+    } catch (e) {
+      return DataFailed(Failure(message: e.toString()));
     }
-
-    final json = jsonDecode(response.body);
-
-    return CharacterResponse.fromJson(json);
   }
 
   @override
-  Future<CharacterResult> getCharacterWithId(int id) async {
-    var response = await _characterService.getCharacterWithId(id);
+  Future<DataState<CharacterModel>> getCharacterDetail(int id) async {
+    try {
+      var response = await _characterService.getCharacterDetail(id);
 
-    if (response.statusCode != HttpStatus.ok) {
-      throw Failure(message: response.httpResponseError());
+      if (response.statusCode == HttpStatus.ok) {
+        var decodedBody = jsonDecode(response.body);
+        CharacterModel characterResponse = CharacterModel.fromJson(decodedBody);
+        return DataSuccess(characterResponse);
+      } else {
+        return DataFailed(Failure(message: 'Http status is not ok.'));
+      }
+    } catch (e) {
+      return DataFailed(Failure(message: e.toString()));
     }
-
-    final json = jsonDecode(response.body);
-
-    return CharacterResult.fromJson(json);
-  }
-
-  @override
-  Future<CharacterResult> getCharacterWithUrl(String url) async {
-    var response = await _characterService.getCharacterWithUrl(url);
-
-    if (response.statusCode != HttpStatus.ok) {
-      throw Failure(message: response.httpResponseError());
-    }
-
-    final json = jsonDecode(response.body);
-
-    return CharacterResult.fromJson(json);
   }
 }

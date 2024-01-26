@@ -5,13 +5,12 @@ class CharacterEntity {
   String? species;
   String? type;
   String? gender;
-  //! fix this than
-  OriginEntity? origin;
+  LocationEntity? origin;
   LocationEntity? location;
   String? image;
   List<String>? episode;
   String? url;
-  String? created;
+  DateTime? created;
 
   CharacterEntity({
     this.id,
@@ -34,11 +33,4 @@ class LocationEntity {
   String? url;
 
   LocationEntity({this.name, this.url});
-}
-
-class OriginEntity {
-  String? name;
-  String? url;
-
-  OriginEntity({this.name, this.url});
 }

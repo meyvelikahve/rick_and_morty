@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_morty_api/feature/episode/application/episode_service.dart';
-import 'package:rick_morty_api/feature/episode/data/dto/episode_response.dart';
 import 'package:rick_morty_api/feature/episode/domain/entities/episode.dart';
+import 'package:rick_morty_api/feature/episode/domain/use_cases/get_all_episodes.dart';
 import 'package:rick_morty_api/feature/episode/presentation/state/page_index_provider.dart';
 import 'package:rick_morty_api/utils/api_future_builder.dart';
 
@@ -17,19 +16,19 @@ class _EpisodeScreenState extends ConsumerState<EpisodeScreen> {
   String? url;
   @override
   Widget build(BuildContext context) {
-    EpisodeService episodeService = ref.watch(episodeServiceProvider);
+    var getAllEpisodes = ref.watch(getAllEpisodesProvider);
     return Scaffold(
       body: GeneralFutureBuilder(
-        future: episodeService.getEpisodeResponse(url: url),
+        future: getAllEpisodes.call(params: 0),
         builder: (context, data) {
-          EpisodeResponse episodeResponse = data;
+          List<EpisodeEntity> episodeEntityList = data;
           return Column(
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: episodeResponse.results.length,
+                  itemCount: episodeEntityList.length,
                   itemBuilder: (context, index) {
-                    var episode = episodeResponse.results[index];
+                    var episode = episodeEntityList[index];
                     return Card(
                       child: ListTile(
                         trailing: Text(episode.episode),
@@ -39,29 +38,6 @@ class _EpisodeScreenState extends ConsumerState<EpisodeScreen> {
                   },
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  data.info.prev != null
-                      ? IconButton(
-                          onPressed: () {
-                            url = data.info.prev;
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.chevron_left),
-                        )
-                      : const SizedBox(),
-                  data.info.next != null
-                      ? IconButton(
-                          onPressed: () {
-                            url = data.info.next;
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.chevron_right),
-                        )
-                      : const SizedBox(),
-                ],
-              ),
             ],
           );
         },
@@ -69,14 +45,14 @@ class _EpisodeScreenState extends ConsumerState<EpisodeScreen> {
     );
   }
 
-  Widget bodyColumn(WidgetRef ref, List<Episode> episodeList) {
+  Widget bodyColumn(WidgetRef ref, List<EpisodeEntity> episodeEntityList) {
     return Column(
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: episodeList.length,
+            itemCount: episodeEntityList.length,
             itemBuilder: (context, index) {
-              Episode episode = episodeList[index];
+              EpisodeEntity episode = episodeEntityList[index];
               return ListTile(
                 title: Text(episode.name),
               );

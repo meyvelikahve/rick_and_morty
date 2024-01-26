@@ -1,8 +1,6 @@
-import 'package:http/http.dart' as http;
+import 'package:rick_morty_api/feature/character/data/models/character_model.dart';
 
 abstract class ICharacterApiService {
-  Future<http.Response> getCharacters();
-  Future<http.Response> getCharacterDetail(int id);
-  // Future<http.Response> getCharacterWithId(int id);
-  // Future<http.Response> getCharacterWithUrl(String url);
+  Future<List<CharacterDto>> getAllCharacters({int? page});
+  Future<CharacterDto> getCharacterDetail(int id);
 }

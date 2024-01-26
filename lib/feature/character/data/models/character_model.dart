@@ -1,13 +1,4 @@
-// To parse this JSON data, do
-//
-//     final CharacterModel = CharacterModelFromJson(jsonString);
-
-import 'dart:convert';
-
-CharacterModel characterModelFromJson(String str) =>
-    CharacterModel.fromJson(json.decode(str));
-
-class CharacterModel {
+class CharacterDto {
   int? id;
   String? name;
   String? status;
@@ -22,7 +13,7 @@ class CharacterModel {
   String? url;
   DateTime? created;
 
-  CharacterModel({
+  CharacterDto({
     this.id,
     this.name,
     this.status,
@@ -37,7 +28,7 @@ class CharacterModel {
     this.created,
   });
 
-  factory CharacterModel.fromJson(Map<String, dynamic> json) => CharacterModel(
+  factory CharacterDto.fromJson(Map<String, dynamic> json) => CharacterDto(
         id: json["id"],
         name: json["name"],
         status: json["status"],

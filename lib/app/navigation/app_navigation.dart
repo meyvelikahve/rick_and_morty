@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rick_morty_api/feature/character/presentation/ui/character_screen.dart';
+import 'package:rick_morty_api/feature/character/presentation/list/view/character_page.dart';
 import 'package:rick_morty_api/feature/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:rick_morty_api/feature/episode/presentation/ui/episode_screen.dart';
 import 'package:rick_morty_api/feature/location/presentation/ui/location_screen.dart';
-import 'package:rick_morty_api/feature/setting/presentation/setting_screen.dart';
 
-import '../../feature/character/presentation/ui/character_detail_screen.dart';
+import '../../feature/character/presentation/detail/view/character_detail_screen.dart';
 
 enum RoutePathEnum {
   episode(path: '/episode'),
@@ -46,9 +45,8 @@ class AppNavigation {
                     name: RoutePathEnum.characterDetail.name,
                     pageBuilder: (context, state) {
                       return NoTransitionPage(
-                        child: CharacterDetailScreen(
+                        child: CharacterDetailsPage(
                           key: state.pageKey,
-                          id: state.pathParameters['id'] ?? '',
                         ),
                       );
                     },
@@ -56,7 +54,7 @@ class AppNavigation {
                 ],
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
-                    child: CharacterScreen(
+                    child: CharacterPage(
                       key: state.pageKey,
                     ),
                   );
@@ -87,21 +85,6 @@ class AppNavigation {
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
                     child: LocationScreen(
-                      key: state.pageKey,
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: RoutePathEnum.setting.path,
-                name: RoutePathEnum.setting.name,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: SettingScreen(
                       key: state.pageKey,
                     ),
                   );

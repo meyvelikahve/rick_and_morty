@@ -15,7 +15,6 @@ class BottomNavBarWidget extends StatelessWidget {
         NavigationDestination(icon: Icon(Icons.list), label: 'episodes'),
         NavigationDestination(
             icon: Icon(Icons.list_alt_sharp), label: 'locations'),
-        NavigationDestination(icon: Icon(Icons.settings), label: 'settings'),
       ],
     );
   }

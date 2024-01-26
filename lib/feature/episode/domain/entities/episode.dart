@@ -1,4 +1,4 @@
-class Episode {
+class EpisodeEntity {
   int id;
   String name;
   String airDate;
@@ -7,7 +7,7 @@ class Episode {
   String url;
   DateTime created;
 
-  Episode({
+  EpisodeEntity({
     required this.id,
     required this.name,
     required this.airDate,
@@ -16,14 +16,4 @@ class Episode {
     required this.url,
     required this.created,
   });
-
-  factory Episode.fromJson(Map<String, dynamic> json) => Episode(
-        id: json["id"],
-        name: json["name"],
-        airDate: json["air_date"],
-        episode: json["episode"],
-        characters: List<String>.from(json["characters"].map((x) => x)),
-        url: json["url"],
-        created: DateTime.parse(json["created"]),
-      );
 }

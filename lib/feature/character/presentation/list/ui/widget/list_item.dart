@@ -35,10 +35,6 @@ class CharacterListItem extends StatelessWidget {
   }
 }
 
-// -----------------------------------------------------------------------------
-// Helpers
-// -----------------------------------------------------------------------------
-
 class _ItemDescription extends StatelessWidget {
   const _ItemDescription({super.key, required this.item});
 
@@ -109,14 +105,6 @@ class _ItemPhoto extends StatelessWidget {
         child: Hero(
           tag: item.id!,
           child: Image.network(item.image!),
-          // child: CachedNetworkImage(
-          //   height: 122,
-          //   width: 122,
-          //   imageUrl: item.image!,
-          //   fit: BoxFit.cover,
-          //   errorWidget: (ctx, url, err) => const Icon(Icons.error),
-          //   placeholder: (ctx, url) => const Icon(Icons.image),
-          // ),
         ),
       ),
     );

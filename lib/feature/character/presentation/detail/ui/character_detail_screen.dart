@@ -12,7 +12,7 @@ class CharacterDetailsPage extends ConsumerWidget {
   static Route<void> route({required CharacterEntity character}) {
     return MaterialPageRoute(
       builder: (context) {
-        return CharacterDetailsPage();
+        return const CharacterDetailsPage();
       },
     );
   }

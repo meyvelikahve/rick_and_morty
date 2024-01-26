@@ -6,33 +6,18 @@ import 'package:rick_morty_api/feature/character/domain/entities/character_entit
 import 'package:rick_morty_api/feature/character/presentation/detail/state/detail_page_notifier.dart';
 import 'package:rick_morty_api/feature/character/presentation/list/state/character_page_notifier.dart';
 import 'package:rick_morty_api/feature/character/presentation/list/state/character_page_state.dart';
-import 'package:rick_morty_api/feature/character/presentation/list/widget/list_item.dart';
-import 'package:rick_morty_api/feature/character/presentation/list/widget/list_item_header.dart';
-import 'package:rick_morty_api/feature/character/presentation/list/widget/list_loading.dart';
+import 'package:rick_morty_api/feature/character/presentation/list/ui/widget/list_item.dart';
+import 'package:rick_morty_api/feature/character/presentation/list/ui/widget/list_item_header.dart';
+import 'package:rick_morty_api/feature/character/presentation/list/ui/widget/list_loading.dart';
 
-// -----------------------------------------------------------------------------
-// Page
-// -----------------------------------------------------------------------------
-class CharacterPage extends StatelessWidget {
+class CharacterPage extends ConsumerStatefulWidget {
   const CharacterPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const CharacterView();
-  }
-}
-
-// -----------------------------------------------------------------------------
-// View
-// -----------------------------------------------------------------------------
-class CharacterView extends ConsumerStatefulWidget {
-  const CharacterView({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CharacterViewState();
 }
 
-class _CharacterViewState extends ConsumerState<CharacterView> {
+class _CharacterViewState extends ConsumerState<CharacterPage> {
   @override
   void initState() {
     super.initState();
@@ -54,9 +39,6 @@ class _CharacterViewState extends ConsumerState<CharacterView> {
   }
 }
 
-// -----------------------------------------------------------------------------
-// Content
-// -----------------------------------------------------------------------------
 class _Content extends ConsumerStatefulWidget {
   const _Content({
     super.key,

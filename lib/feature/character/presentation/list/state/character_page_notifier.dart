@@ -24,7 +24,6 @@ class CharacterStateNotifier extends StateNotifier<CharacterPageState> {
 
     final list = await _getAllCharacters.call(params: state.currentPage);
 
-    print(state.currentPage.toString());
     state = state.copyWith(
       status: CharacterPageStatus.loading,
       currentPage: state.currentPage + 1,

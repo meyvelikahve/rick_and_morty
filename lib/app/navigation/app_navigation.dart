@@ -4,7 +4,8 @@ import 'package:rick_morty_api/feature/character/presentation/list/ui/character_
 import 'package:rick_morty_api/feature/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:rick_morty_api/feature/episode/presentation/detail/ui/episode_detail_page.dart';
 import 'package:rick_morty_api/feature/episode/presentation/list/ui/episode_page.dart';
-import 'package:rick_morty_api/feature/location/presentation/ui/location_screen.dart';
+import 'package:rick_morty_api/feature/location/presentation/detail/ui/location_detail_page.dart';
+import 'package:rick_morty_api/feature/location/presentation/list/ui/location_page.dart';
 
 import '../../feature/character/presentation/detail/ui/character_detail_screen.dart';
 
@@ -14,8 +15,7 @@ enum RoutePathEnum {
   episode(path: '/episode'),
   episodeDetail(path: 'episodeDetail'),
   location(path: '/location'),
-  setting(path: '/setting'),
-  ;
+  locationDetail(path: 'locationDetail');
 
   const RoutePathEnum({required this.path});
   final String path;
@@ -97,9 +97,35 @@ class AppNavigation {
               GoRoute(
                 path: RoutePathEnum.location.path,
                 name: RoutePathEnum.location.name,
+                routes: [
+                  GoRoute(
+                    path: '${RoutePathEnum.locationDetail.path}:id',
+                    name: RoutePathEnum.locationDetail.name,
+                    pageBuilder: (context, state) {
+                      return NoTransitionPage(
+                        child: LocationDetailPage(
+                          key: state.pageKey,
+                        ),
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                        path: '${RoutePathEnum.characterDetail.path}:id',
+                        name: RoutePathEnum.characterDetail.name,
+                        pageBuilder: (context, state) {
+                          return NoTransitionPage(
+                            child: CharacterDetailsPage(
+                              key: state.pageKey,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
-                    child: LocationScreen(
+                    child: LocationPage(
                       key: state.pageKey,
                     ),
                   );

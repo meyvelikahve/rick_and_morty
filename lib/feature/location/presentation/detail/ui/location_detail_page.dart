@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_morty_api/feature/character/presentation/detail/state/detail_page_notifier.dart';
+import 'package:rick_morty_api/feature/location/presentation/detail/state/location_detail_page_notifier.dart';
 
-class CharacterDetailsPage extends StatelessWidget {
-  const CharacterDetailsPage({super.key});
+class LocationDetailPage extends StatelessWidget {
+  const LocationDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: kToolbarHeight,
-        title: const Text('Character Detail'),
+        title: const Text('Details'),
       ),
       body: const _Content(),
     );
@@ -26,15 +26,16 @@ class _Content extends ConsumerWidget {
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
-    final character = ref.watch(characterDetailsPageProvider).character!;
+    final location = ref.watch(locationDetailPageProvider).location!;
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Hero(
-            tag: character.id!,
-            child: Image.network(character.image ?? ''),
+            tag: location.id,
+            child: Text(location.name),
+            //child: Image.network(location. ?? ''),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -44,7 +45,7 @@ class _Content extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    character.name ?? '',
+                    location.name,
                     style: textTheme.displaySmall!.copyWith(
                       color: colorScheme.onSurfaceVariant,
                       fontWeight: FontWeight.bold,
@@ -52,46 +53,25 @@ class _Content extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Status: ${character.status}',
+                    'Dimension: ${location.dimension}',
                   ),
                   const SizedBox(height: 8),
                   const Divider(height: 1),
                   const SizedBox(height: 16),
                   Text(
-                    'Origin: ${character.origin?.name ?? ''}',
+                    'Type: ${location.type}',
                     style: textTheme.bodyMedium!.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Last location: ${character.location?.name ?? ''}',
+                    'Last location: ${location.residents.length}',
                     style: textTheme.bodyMedium!.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Species: ${character.species ?? ''}',
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Type: ${character.type ?? '?'}',
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Gender: ${character.gender ?? ''}',
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  // const SizedBox(height: 4),
                 ],
               ),
             ),
@@ -109,16 +89,16 @@ class _Content extends ConsumerWidget {
             height: 80,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: character.episode?.length ?? 0,
+              itemCount: location.residents.length,
               itemBuilder: (context, index) {
-                final ep = character.episode![index];
-                final name = ep.split('/').last;
+                final residents = location.residents;
+                //final name = residents.split('/').last;
 
                 return Padding(
                   padding: const EdgeInsets.only(left: 12.0, top: 8),
                   child: InkWell(
                     onTap: () {
-                      print("object $ep");
+                      print("object ${residents[index]}");
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -131,7 +111,7 @@ class _Content extends ConsumerWidget {
                       width: 80,
                       child: Center(
                         child: Text(
-                          name,
+                          residents[index].characters.first,
                           style: textTheme.bodyLarge!.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),

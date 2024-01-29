@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_morty_api/common/exception/failure.dart';
-import 'package:rick_morty_api/feature/character/data/models/character_model_extention.dart';
 import 'package:rick_morty_api/feature/location/data/api/ilocation_api_service.dart';
 import 'package:rick_morty_api/feature/location/data/api/location_api_service.dart';
 import 'package:rick_morty_api/feature/location/data/dto/location_dto.dart';
@@ -18,11 +17,11 @@ class LocationRepositoryImpl implements LocationRepository {
   LocationRepositoryImpl(this._locationApiService);
 
   @override
-  Future<List<LocationEntity>> getAllLocations() async {
+  Future<List<LocationEntity>> getAllLocations({int? page}) async {
     try {
       List<LocationEntity> locationEntityList = [];
       List<LocationDto> locationDtoList =
-          await _locationApiService.getAllLocations();
+          await _locationApiService.getAllLocations(page: page);
 
       for (var locationDto in locationDtoList) {
         locationEntityList.add(locationDto.toLocationEntity());

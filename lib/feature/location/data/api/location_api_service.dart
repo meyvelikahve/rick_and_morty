@@ -14,10 +14,10 @@ final locationApiServiceProvider = Provider<ILocationApiService>((ref) {
 
 class LocationApiService with UrlMixin implements ILocationApiService {
   @override
-  Future<List<LocationDto>> getAllLocations() async {
+  Future<List<LocationDto>> getAllLocations({int? page}) async {
     try {
       List<LocationDto> locations = [];
-      Uri url = getUriWithPath('/api/location');
+      Uri url = getUriWithPath('/api/location', 'page=$page');
 
       var response = await http.get(url);
 

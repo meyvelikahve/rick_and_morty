@@ -16,7 +16,7 @@ class GetAllLocations extends UseCase<List<LocationEntity>, int> {
   @override
   Future<List<LocationEntity>?> call({int? params}) async {
     List<LocationEntity> locations =
-        await _locationRepository.getAllLocations();
+        await _locationRepository.getAllLocations(page: params);
     return locations;
   }
 }

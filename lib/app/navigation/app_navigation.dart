@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rick_morty_api/feature/character/presentation/list/view/character_page.dart';
+import 'package:rick_morty_api/feature/character/presentation/list/ui/character_page.dart';
 import 'package:rick_morty_api/feature/dashboard/presentation/ui/dashboard_screen.dart';
-import 'package:rick_morty_api/feature/episode/presentation/ui/episode_screen.dart';
+import 'package:rick_morty_api/feature/episode/presentation/detail/ui/episode_detail_page.dart';
+import 'package:rick_morty_api/feature/episode/presentation/list/ui/episode_page.dart';
 import 'package:rick_morty_api/feature/location/presentation/ui/location_screen.dart';
 
-import '../../feature/character/presentation/detail/view/character_detail_screen.dart';
+import '../../feature/character/presentation/detail/ui/character_detail_screen.dart';
 
 enum RoutePathEnum {
-  episode(path: '/episode'),
   character(path: '/character'),
   characterDetail(path: 'characterDetail'),
+  episode(path: '/episode'),
+  episodeDetail(path: 'episodeDetail'),
   location(path: '/location'),
   setting(path: '/setting'),
   ;
@@ -67,9 +69,22 @@ class AppNavigation {
               GoRoute(
                 path: RoutePathEnum.episode.path,
                 name: RoutePathEnum.episode.name,
+                routes: [
+                  GoRoute(
+                    path: '${RoutePathEnum.episodeDetail.path}:id',
+                    name: RoutePathEnum.episodeDetail.name,
+                    pageBuilder: (context, state) {
+                      return NoTransitionPage(
+                        child: EpisodeDetailPage(
+                          key: state.pageKey,
+                        ),
+                      );
+                    },
+                  ),
+                ],
                 pageBuilder: (context, state) {
                   return NoTransitionPage(
-                    child: EpisodeScreen(
+                    child: EpisodePage(
                       key: state.pageKey,
                     ),
                   );

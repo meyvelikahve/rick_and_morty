@@ -1,5 +1,5 @@
-import 'package:http/http.dart' as http;
+import 'package:rick_morty_api/feature/location/data/dto/location_dto.dart';
 
 abstract class ILocationApiService {
-  Future<http.Response> getLocationResponse();
+  Future<List<LocationDto>> getAllLocations();
 }

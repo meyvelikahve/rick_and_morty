@@ -5,8 +5,8 @@ class CharacterEntity {
   String? species;
   String? type;
   String? gender;
-  LocationEntity? origin;
-  LocationEntity? location;
+  CharacterLocationEntity? origin;
+  CharacterLocationEntity? location;
   String? image;
   List<String>? episode;
   String? url;
@@ -28,9 +28,9 @@ class CharacterEntity {
   });
 }
 
-class LocationEntity {
+class CharacterLocationEntity {
   String? name;
   String? url;
 
-  LocationEntity({this.name, this.url});
+  CharacterLocationEntity({this.name, this.url});
 }

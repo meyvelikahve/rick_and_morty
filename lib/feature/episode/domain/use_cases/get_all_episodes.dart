@@ -14,8 +14,8 @@ class GetAllEpisodes extends UseCase<List<EpisodeEntity>, int> {
 
   GetAllEpisodes(this._episodeRepository);
   @override
-  Future<List<EpisodeEntity>> call({int? params}) async {
-    List<EpisodeEntity> episodes =
+  Future<List<EpisodeEntity>?> call({int? params}) async {
+    List<EpisodeEntity>? episodes =
         await _episodeRepository.getAllEpisodes(page: params);
     return episodes;
   }

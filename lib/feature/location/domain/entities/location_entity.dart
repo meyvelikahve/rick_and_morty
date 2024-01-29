@@ -1,4 +1,4 @@
-class Location {
+class LocationEntity {
   int id;
   String name;
   String type;
@@ -7,7 +7,7 @@ class Location {
   String url;
   DateTime created;
 
-  Location({
+  LocationEntity({
     required this.id,
     required this.name,
     required this.type,

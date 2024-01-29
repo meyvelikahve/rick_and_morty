@@ -140,22 +140,28 @@ class _Content extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final ep = character.episode![index];
                 final name = ep.split('/').last;
+
                 return Padding(
                   padding: const EdgeInsets.only(left: 12.0, top: 8),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(16),
+                  child: InkWell(
+                    onTap: () {
+                      print("object $ep");
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16),
+                        ),
+                        color: colorScheme.surfaceVariant,
                       ),
-                      color: colorScheme.surfaceVariant,
-                    ),
-                    height: 80,
-                    width: 80,
-                    child: Center(
-                      child: Text(
-                        name,
-                        style: textTheme.bodyLarge!.copyWith(
-                          color: colorScheme.onSurfaceVariant,
+                      height: 80,
+                      width: 80,
+                      child: Center(
+                        child: Text(
+                          name,
+                          style: textTheme.bodyLarge!.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
                     ),

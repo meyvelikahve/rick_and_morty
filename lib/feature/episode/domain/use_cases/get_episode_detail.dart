@@ -3,7 +3,7 @@ import 'package:rick_morty_api/feature/episode/domain/entities/episode.dart';
 import 'package:rick_morty_api/feature/episode/domain/repository/episode_repository.dart';
 
 class GetEpisodeDetail extends UseCase<EpisodeEntity, int> {
-  EpisodeRepository _episodeRepository;
+  final EpisodeRepository _episodeRepository;
 
   GetEpisodeDetail(this._episodeRepository);
   @override

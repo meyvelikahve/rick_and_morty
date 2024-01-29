@@ -20,7 +20,7 @@ extension CharacterModelExtention on CharacterDto {
 }
 
 extension CharacterLocationExtention on CharacterLocation {
-  LocationEntity toLocationEntity() {
-    return LocationEntity(url: url, name: name);
+  CharacterLocationEntity toLocationEntity() {
+    return CharacterLocationEntity(url: url, name: name);
   }
 }

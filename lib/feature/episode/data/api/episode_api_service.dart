@@ -15,7 +15,7 @@ final episodeApiServiceProvider = Provider<EpisodeApiService>((ref) {
 class EpisodeApiService with UrlMixin implements IEpisodeApiService {
   String basePath = '/api/episode';
   @override
-  Future<List<EpisodeDto>> getAllEpisodes({int? page}) async {
+  Future<List<EpisodeDto>?> getAllEpisodes({int? page}) async {
     try {
       final url = getUriWithPath(
         basePath,

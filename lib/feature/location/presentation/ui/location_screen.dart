@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_morty_api/feature/location/application/location_service.dart';
-import 'package:rick_morty_api/feature/location/domain/entities/location_model.dart';
+import 'package:rick_morty_api/feature/location/domain/entities/location_entity.dart';
+import 'package:rick_morty_api/feature/location/domain/use_case/get_all_locations.dart';
 import 'package:rick_morty_api/utils/api_future_builder.dart';
 
 class LocationScreen extends ConsumerWidget {
@@ -9,21 +9,21 @@ class LocationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var locationService = ref.watch(locationServiceProvider);
+    var locationService = ref.watch(getAllLocationProvider);
     return GeneralFutureBuilder(
-      future: locationService.getLocationList(),
+      future: locationService.call(),
       builder: (context, data) {
         return myListView(data);
       },
     );
   }
 
-  Widget myListView(List<Location> data) {
+  Widget myListView(List<LocationEntity>? data) {
     return ListView.builder(
-      itemCount: data.length,
+      itemCount: data?.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(data[index].name),
+          title: Text(data?[index].name ?? ''),
         );
       },
     );

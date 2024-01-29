@@ -16,14 +16,16 @@ class EpisodeRepositoryImpl implements EpisodeRepository {
   EpisodeRepositoryImpl(this._episodeApiService);
 
   @override
-  Future<List<EpisodeEntity>> getAllEpisodes({int? page}) async {
+  Future<List<EpisodeEntity>?> getAllEpisodes({int? page}) async {
     try {
       List<EpisodeEntity> episodeList = [];
-      final episodeDtoList =
-          await _episodeApiService.getAllEpisodes(page: page);
-      for (var episodeDto in episodeDtoList) {
-        episodeList.add(episodeDto.toEpisodeEntity());
+      var episodeDtoList = await _episodeApiService.getAllEpisodes(page: page);
+      if (episodeDtoList != null) {
+        for (var episodeDto in episodeDtoList) {
+          episodeList.add(episodeDto.toEpisodeEntity());
+        }
       }
+
       return episodeList;
     } catch (e) {
       throw Failure(message: e.toString());

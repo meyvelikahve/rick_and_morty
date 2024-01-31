@@ -16,10 +16,13 @@ class GetCharacterDetail implements UseCase<CharacterEntity, int> {
   GetCharacterDetail(this._characterRepository);
 
   @override
-  Future<CharacterEntity> call({int? params}) async {
+  Future<CharacterEntity?> call({int? params}) async {
     try {
+      if (params == null) {
+        return null;
+      }
       CharacterEntity characterEntity =
-          await _characterRepository.getCharacterDetail(params ?? 1);
+          await _characterRepository.getCharacterDetail(params);
 
       return characterEntity;
     } catch (e) {

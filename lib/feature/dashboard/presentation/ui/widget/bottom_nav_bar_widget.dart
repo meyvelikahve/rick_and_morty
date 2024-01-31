@@ -11,10 +11,9 @@ class BottomNavBarWidget extends StatelessWidget {
       selectedIndex: child.currentIndex,
       onDestinationSelected: (value) => _onItemSelected(value),
       destinations: const [
-        NavigationDestination(icon: Icon(Icons.list_alt), label: 'characters'),
-        NavigationDestination(icon: Icon(Icons.list), label: 'episodes'),
-        NavigationDestination(
-            icon: Icon(Icons.list_alt_sharp), label: 'locations'),
+        NavigationDestination(icon: Icon(Icons.group), label: 'characters'),
+        NavigationDestination(icon: Icon(Icons.camera), label: 'episodes'),
+        NavigationDestination(icon: Icon(Icons.map), label: 'locations'),
       ],
     );
   }

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Rick And Morty Api Demo',
       routerConfig: AppNavigation.router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
     );

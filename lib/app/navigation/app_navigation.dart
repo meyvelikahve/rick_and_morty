@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rick_morty_api/feature/character/presentation/list/ui/character_page.dart';
+import 'package:rick_morty_api/feature/character/domain/entities/character_entity.dart';
+import 'package:rick_morty_api/feature/character/presentation/list/view/character_page.dart';
 import 'package:rick_morty_api/feature/dashboard/presentation/ui/dashboard_screen.dart';
-import 'package:rick_morty_api/feature/episode/presentation/detail/ui/episode_detail_page.dart';
-import 'package:rick_morty_api/feature/episode/presentation/list/ui/episode_page.dart';
-import 'package:rick_morty_api/feature/location/presentation/detail/ui/location_detail_page.dart';
-import 'package:rick_morty_api/feature/location/presentation/list/ui/location_page.dart';
+import 'package:rick_morty_api/feature/episode/domain/entities/episode.dart';
+import 'package:rick_morty_api/feature/episode/presentation/detail/view/episode_detail_page.dart';
+import 'package:rick_morty_api/feature/episode/presentation/list/view/episode_page.dart';
+import 'package:rick_morty_api/feature/location/domain/entities/location_entity.dart';
+import 'package:rick_morty_api/feature/location/presentation/detail/view/location_detail_page.dart';
+import 'package:rick_morty_api/feature/location/presentation/list/view/location_page.dart';
 
-import '../../feature/character/presentation/detail/ui/character_detail_screen.dart';
+import '../../feature/character/presentation/detail/view/character_detail_screen.dart';
 
 enum RoutePathEnum {
   character(path: '/character'),
   characterDetail(path: 'characterDetail'),
+  characterEpisodeDetail(path: 'characterEpisodeDetail'),
   episode(path: '/episode'),
   episodeDetail(path: 'episodeDetail'),
   location(path: '/location'),
-  locationDetail(path: 'locationDetail');
+  locationDetail(path: 'locationDetail'),
+  locationCharacterDetail(path: 'locationCharacterDetail');
 
   const RoutePathEnum({required this.path});
   final String path;
@@ -43,13 +48,27 @@ class AppNavigation {
                 name: RoutePathEnum.character.name,
                 routes: [
                   GoRoute(
-                    path: '${RoutePathEnum.characterDetail.path}:id',
+                    path: '${RoutePathEnum.characterDetail.path}:characterId',
                     name: RoutePathEnum.characterDetail.name,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: CharacterDetailsPage(
-                          key: state.pageKey,
-                        ),
+                    builder: (context, state) {
+                      CharacterEntity characterEntity =
+                          state.extra as CharacterEntity;
+                      return CharacterDetailsPage(
+                        key: state.pageKey,
+                        characterEntity: characterEntity,
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path:
+                        '${RoutePathEnum.characterEpisodeDetail.path}/:episodeId',
+                    name: RoutePathEnum.characterEpisodeDetail.name,
+                    builder: (context, state) {
+                      EpisodeEntity episodeEntity =
+                          state.extra as EpisodeEntity;
+                      return EpisodeDetailPage(
+                        key: state.pageKey,
+                        episodeEntity: episodeEntity,
                       );
                     },
                   ),
@@ -71,14 +90,13 @@ class AppNavigation {
                 name: RoutePathEnum.episode.name,
                 routes: [
                   GoRoute(
-                    path: '${RoutePathEnum.episodeDetail.path}:id',
+                    path: '${RoutePathEnum.episodeDetail.path}:episodeId',
                     name: RoutePathEnum.episodeDetail.name,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: EpisodeDetailPage(
-                          key: state.pageKey,
-                        ),
-                      );
+                    builder: (context, state) {
+                      EpisodeEntity episodeEntity =
+                          state.extra as EpisodeEntity;
+
+                      return EpisodeDetailPage(episodeEntity: episodeEntity);
                     },
                   ),
                 ],
@@ -99,24 +117,24 @@ class AppNavigation {
                 name: RoutePathEnum.location.name,
                 routes: [
                   GoRoute(
-                    path: '${RoutePathEnum.locationDetail.path}:id',
+                    path: '${RoutePathEnum.locationDetail.path}:locationId',
                     name: RoutePathEnum.locationDetail.name,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: LocationDetailPage(
-                          key: state.pageKey,
-                        ),
-                      );
+                    builder: (context, state) {
+                      LocationEntity locationEntity =
+                          state.extra as LocationEntity;
+
+                      return LocationDetailPage(locationEntity: locationEntity);
                     },
                     routes: [
                       GoRoute(
-                        path: '${RoutePathEnum.characterDetail.path}:id',
-                        name: RoutePathEnum.characterDetail.name,
-                        pageBuilder: (context, state) {
-                          return NoTransitionPage(
-                            child: CharacterDetailsPage(
-                              key: state.pageKey,
-                            ),
+                        path:
+                            '${RoutePathEnum.locationCharacterDetail.path}/:characterId',
+                        name: RoutePathEnum.locationCharacterDetail.name,
+                        builder: (context, state) {
+                          CharacterEntity characterEntity =
+                              state.extra as CharacterEntity;
+                          return CharacterDetailsPage(
+                            characterEntity: characterEntity,
                           );
                         },
                       ),

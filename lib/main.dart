@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_morty_api/app/get_it/locator.dart';
 import 'package:rick_morty_api/app/navigation/app_navigation.dart';
 
 void main() {
-  setup();
   runApp(
     const ProviderScope(
       child: MyApp(),

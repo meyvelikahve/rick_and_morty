@@ -65,13 +65,6 @@ class _Content extends ConsumerWidget {
                   const SizedBox(height: 8),
                   const Divider(height: 1),
                   const SizedBox(height: 16),
-                  Text(
-                    'Type: ${episodeEntity.name}',
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
                 ],
               ),
             ),
